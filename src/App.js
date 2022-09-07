@@ -1,12 +1,12 @@
-import logo from './logo.svg';
 import './App.css';
-
+import NavBar from './Components/NavBar'
+import MainBody from './Components/MainBody'
 function App() {
   return (
     <div className="App">
-      <h1>
-        hai iam Dinesh
-      </h1>
+      <NavBar/>
+      <MainBody/>
+
     </div>
   );
 }

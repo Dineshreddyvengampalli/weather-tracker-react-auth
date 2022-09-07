@@ -1,0 +1,11 @@
+.logo{
+    border-radius: 10px;
+    max-width: 60px;
+}
+.appbar{
+    border-radius: 10px;
+
+}
+.main-heading{
+    flex-grow: 1;
+}
