@@ -1,11 +1,15 @@
 import {List,ListItemButton,Card,CardContent,Typography} from '@mui/material'
-import Forecast from './Forecast'
-import { Box } from '@mui/system'
+import {Link} from 'react-router-dom'
+import { Box,Button } from '@mui/material'
 import {useState} from 'react'
 import axios from 'axios'
-import moment from 'moment'
+import './MainBody.css'
+import ReactGa from 'react-ga'
 
 let MainBody = ()=>{
+  const [data,setData] = useState([])
+  const [city,setCity] = useState('')
+  let to = `calender/${city}`
   let staticData = {
         "apikey": "011eaabd1ac39453a6df9a064eb8befd",
         "locations": {
@@ -47,32 +51,14 @@ let MainBody = ()=>{
           }
         }
       }
-    let predictHandler = async()=>{
-        let date = new Date()
-        let daysInMonth = moment(date).daysInMonth()
-        let currentDate = date.getDate()
-        let daysRemaining = daysInMonth - currentDate
-        console.log(daysRemaining)
-
-    let dayData = await axios.get('https://pro.openweathermap.org/data/2.5/forecast/climate',{params:{
-        appid : 'b1b15e88fa797225412429c1c50c122a1',
-        lat : staticData.locations.chennai.lat,
-        lon : staticData.locations.chennai.long,
-        cnt : daysRemaining
-        }
-    })
-    let resData = await dayData.data.list
-    setdData(resData)
-    console.log(dData)
-        
-    }
-    const [data,setData] = useState([])
-    const [city,setCity] = useState('')
-    const [dData,setdData] = useState([])
+  
   let clickHandler = async(event)=>{
     let location = event.target.id
-    console.log(location)
-    setCity(location.toUpperCase())
+    ReactGa.event({
+      category : 'city-selection',
+      action : `city selected : ${location}`
+    })
+    setCity(location)
     let res = await axios.get('https://api.openweathermap.org/data/2.5/weather',{params:{
         appid : staticData.apikey,
         lat : staticData.locations[location]['lat'],
@@ -80,13 +66,12 @@ let MainBody = ()=>{
         }
     })
     let data = await res.data.main.temp - 273.15
-    console.log(data)
     setData(data)
   }
     
     return( 
-        <div>
-            <Box direction='row' spacing='10px' display='flex'bgcolor='#ADD8E6' borderRadius='10px'>
+        <div className='container'>
+            <Box direction='row' spacing='10px' display='flex'bgcolor='#ADD8E6' borderRadius='10px' padding='1%'>
                 <Box>
                     <List>
                         <Typography variant='h5'> Locations: </Typography>
@@ -99,8 +84,6 @@ let MainBody = ()=>{
                         <ListItemButton id='kadapa' onClick={clickHandler}>kadapa</ListItemButton>
                         <ListItemButton id='tirupati' onClick={clickHandler}>Tirupati</ListItemButton>
                         <ListItemButton id='mumbai' onClick={clickHandler}>Mumbai</ListItemButton>
-
-
                     </List>
 
                 </Box>
@@ -112,15 +95,13 @@ let MainBody = ()=>{
                             <Typography>selected city : {city}</Typography>
                             <Typography >Temperature:{Math.round(data)}°C</Typography>
                         </CardContent>
-                    </Card>
-             
-                </Box>
+                    </Card>           
+                </Box> 
                 <Box>
-                    <button onClick={predictHandler}>Show predicted data</button>
-                    <Forecast item = {dData}></Forecast>
-                   
-                </Box>
-
+                  <Link to ={to} >Check predictions</Link>
+                <br></br>   
+                <Link  to = '/simple'>Go to simple</Link>   
+                </Box>      
             </Box>
             
         </div>

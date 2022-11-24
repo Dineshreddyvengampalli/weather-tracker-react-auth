@@ -68,8 +68,6 @@ let WeatherTrack = ()=>{
         <List>
 
           <ListItemButton  id='chennai' onClick={clickHandler}>chennai</ListItemButton>
-
-
         </List>
         <DisplayWeather temperature = {data} />
       </Box>

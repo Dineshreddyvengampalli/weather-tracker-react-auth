@@ -1,0 +1,12 @@
+.datacard{
+    max-width: 10%;
+}
+
+/* .container{
+    display: flex;
+    flex-direction: row;
+} */
+
+.heading{
+    display: block;
+}
