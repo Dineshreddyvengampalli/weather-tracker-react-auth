@@ -9,7 +9,7 @@ import {Fragment} from 'react'
 import ReactGa from 'react-ga'
 import Test from './Components/Test'
 
-ReactGa.initialize('UA-250102415-3')
+ReactGa.initialize('UA-250102415-3') //env
 
 
 function App() {
