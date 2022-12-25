@@ -14,5 +14,6 @@ workflows:
           dockerfile: Dockerfile
           path: .
           region: AWS_REGION
+          registry-id: AWS_ECR_REG_ID
           repo: weather-app
           tag: "$CIRCLE_SHA1"
