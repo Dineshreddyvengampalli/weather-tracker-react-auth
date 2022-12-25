@@ -8,12 +8,12 @@ workflows:
   build_and_push_image:
     jobs:
       - aws-ecr/build-and-push-image:
-          aws-access-key-id: "${AWS_ACCESS_KEY_ID}"
-          aws-secret-access-key: "${AWS_SECRET_ACCESS_KEY}"
+          aws-access-key-id: AWS_ACCESS_KEY_ID
+          aws-secret-access-key: AWS_SECRET_ACCESS_KEY
           create-repo: true
           dockerfile: Dockerfile
           path: .
-          region: "${AWS_REGION}"
-          registry-id: "${AWS_ECR_REG_ID}"
+          region: AWS_REGION
+          registry-id: AWS_ECR_REG_ID
           repo: weather-app
           tag: "$CIRCLE_SHA1"
