@@ -1,12 +1,15 @@
 version: 2.1
 
 orbs:
-  aws-ecr: circleci/aws-ecr@6.7.0
+  aws-ecr: circleci/aws-ecr@8.2.1
+
 
 workflows:
   build_and_push_image:
     jobs:
       - aws-ecr/build-and-push-image:
+           docker:
+              - image: circleci/node:latest
           account-url: AWS_ECR_ACCOUNT_URL
           aws-access-key-id: AWS_ACCESS_KEY_ID
           aws-secret-access-key: AWS_SECRET_ACCESS_KEY
@@ -14,5 +17,5 @@ workflows:
           dockerfile: Dockerfile
           path: .
           region: AWS_REGION
-          repo: circleci-ecr-orb-demo
+          repo: weather-app
           tag: "$CIRCLE_SHA1"
