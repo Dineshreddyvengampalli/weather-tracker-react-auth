@@ -1,18 +1,18 @@
 version: 2.1
 
 orbs:
-  aws-ecr: circleci/aws-ecr@8.1
-  aws-ecs: circleci/aws-ecs@3.2
+  aws-ecr: circleci/aws-ecr@8.2.1
+
 
 workflows:
-  build-and-deploy:
+  build_and_push_image:
     jobs:
       - aws-ecr/build-and-push-image:
-          repo: "${AWS_ECR_ACCOUNT_URL}"
-          tag: "${CIRCLE_SHA1}"
-      - aws-ecs/deploy-service-update:
-          requires:
-            - aws-ecr/build-and-push-image # only run this job once aws-ecr/build-and-push-image has completed
-          family: "${AWS_ECR_ACCOUNT_URL}-service"
-          cluster: "${AWS_ECR_ACCOUNT_URL}-cluster"
-          container-image-name-updates: "container=${AWS_ECR_ACCOUNT_URL}-service,tag=${CIRCLE_SHA1}"
+          aws-access-key-id: AWS_ACCESS_KEY_ID
+          aws-secret-access-key: AWS_SECRET_ACCESS_KEY
+          create-repo: true
+          dockerfile: Dockerfile
+          path: .
+          registry-id: AWS_ECR_REG_ID
+          repo: weather-app
+          tag: "$CIRCLE_SHA1"
